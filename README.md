@@ -1,16 +1,14 @@
 # Computer Graphics 1
-### Task 2
+### Task 3
 
   Controls:
 
-  1 - Line
-
-  2 - Polygon
+  W, A, S, D - move camera
   
-  3 - Seed Fill 4Q 
+  1 - Cube
   
-4 - ScanLine
+  2 - Cuboid
 
-5 - Seed Fill 4 (for small polygons)
-
-C - Clear
+  3 - Pyramid
+ 
+  C - Clear
