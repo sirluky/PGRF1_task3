@@ -206,7 +206,7 @@ public class Canvas3D {
 
 
         JLabel label = new JLabel();
-        label.setText("Cam [WASD] | Solid [1][2][3][4] | Zoom [M-Wheel] |  Rotate [↑][↓] modes (X, Y, Z)");
+        label.setText("Cam [W] [A] [S] [D] | Solid [1] [2] [3] [4] | Zoom [M-Wheel] |  Rotate [UP] [DOWN] modes [X] [Y] [Z]");
         // 0 = CENTER
         label.setVerticalAlignment(0);
         label.setHorizontalAlignment(0);
