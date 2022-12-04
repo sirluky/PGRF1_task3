@@ -44,10 +44,10 @@ public class Canvas3D {
         scene = new ArrayList<>();
 
         // 3D objects
-         Cube cube3D = new Cube();
-
+        Cube cube3D = new Cube();
         Cuboid cuboid3D = new Cuboid();
         Pyramid pyramid3D = new Pyramid();
+        Tetrahedron tetrahedron3D = new Tetrahedron();
 
         // Camera
         cam = new Camera(new Vec3D(-1, -4, 1), 1, -0.5, 1.5, false);
@@ -56,7 +56,7 @@ public class Canvas3D {
 
 
 
-        scene.add(cube3D);
+        
         panel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
@@ -137,6 +137,12 @@ public class Canvas3D {
                     scene.clear();
                     scene.add(pyramid3D);
                 }
+
+                if (e.getKeyCode() == KeyEvent.VK_4) {
+                    scene.clear();
+                    scene.add(tetrahedron3D);
+
+                }
                 // Cam movement WASD
                 if (e.getKeyCode() == KeyEvent.VK_W) {
                     cam = cam.forward(speed);
@@ -173,7 +179,7 @@ public class Canvas3D {
 
 
         JLabel label = new JLabel();
-        label.setText("Cam [W] [A] [S] [D] | Object [1] [2] [3] | Clear [C] | Zoom [M Wheel]");
+        label.setText("Cam [W] [A] [S] [D] | Solid [1] [2] [3] [4] | Zoom [M-Wheel]");
 
         label.setVerticalAlignment(JLabel.CENTER);
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -190,7 +196,6 @@ public class Canvas3D {
 
     public void clear() {
         img.clear(0x000000);
-        scene.add(new Cube());
     }
 
 
