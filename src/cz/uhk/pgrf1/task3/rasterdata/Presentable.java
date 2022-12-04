@@ -1,4 +1,4 @@
-package rasterdata;
+package cz.uhk.pgrf1.task3.rasterdata;
 
 
 

@@ -1,19 +1,19 @@
-package rasterops;
+package cz.uhk.pgrf1.task3.rasterops;
 
-import objectdata.Solid;
-import rasterdata.RasterImage;
-import transforms.Mat4;
-import transforms.Mat4PerspRH;
-import transforms.Point3D;
-import transforms.Vec3D;
+import cz.uhk.pgrf1.task3.objectdata.Solid;
+import cz.uhk.pgrf1.task3.rasterdata.RasterImage;
+import transforms.*;
 
 import java.util.List;
 
 public class Wireframe<P> {
 
+
+
     private Liner<P> liner;
 
     private Mat4PerspRH proj;
+    private Mat4 orthoRH;
     private Solid solid;
     private P pixelValue;
     private RasterImage<P> img;
@@ -27,6 +27,15 @@ public class Wireframe<P> {
         this.img = img;
         this.pixelValue = pixelValue;
     }
+
+    public Wireframe(RasterImage<P> img, final P pixelValue, Liner<P> liner, Mat4 view, Mat4OrthoRH orthoRH) {
+        this.img =  img;
+        this.pixelValue = pixelValue;
+        this.liner = liner;
+        this.view = view;
+        this.orthoRH = orthoRH;
+    }
+
 
     public void setView(Mat4 view) {
         this.view = view;

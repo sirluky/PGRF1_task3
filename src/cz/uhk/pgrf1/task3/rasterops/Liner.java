@@ -1,9 +1,9 @@
-package rasterops;
+package cz.uhk.pgrf1.task3.rasterops;
 
-import rasterdata.RasterImage;
+import cz.uhk.pgrf1.task3.rasterdata.RasterImage;
 
 /**
- * Represents an algorithm for drawing lines on a {@link rasterdata.RasterImage} with pixels of the given type
+ * Represents an algorithm for drawing lines on a {@link RasterImage} with pixels of the given type
  * @param <P> pixel type
  */
 public interface Liner<P> {

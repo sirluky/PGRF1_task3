@@ -1,6 +1,6 @@
-package rasterops;
+package cz.uhk.pgrf1.task3.rasterops;
 
-import rasterdata.RasterImage;
+import cz.uhk.pgrf1.task3.rasterdata.RasterImage;
 
 public class TrivialLiner<P> implements Liner<P>{
 

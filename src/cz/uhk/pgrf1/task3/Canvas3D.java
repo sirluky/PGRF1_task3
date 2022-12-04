@@ -1,10 +1,12 @@
-import objectdata.*;
-import rasterdata.Presentable;
-import rasterdata.RasterImage;
-import rasterdata.RasterImageBI;
-import rasterops.Liner;
-import rasterops.TrivialLiner;
-import rasterops.Wireframe;
+package cz.uhk.pgrf1.task3;
+
+import cz.uhk.pgrf1.task3.objectdata.*;
+import cz.uhk.pgrf1.task3.rasterdata.Presentable;
+import cz.uhk.pgrf1.task3.rasterdata.RasterImage;
+import cz.uhk.pgrf1.task3.rasterdata.RasterImageBI;
+import cz.uhk.pgrf1.task3.rasterops.Liner;
+import cz.uhk.pgrf1.task3.rasterops.TrivialLiner;
+import cz.uhk.pgrf1.task3.rasterops.Wireframe;
 import transforms.Camera;
 import transforms.Mat4PerspRH;
 import transforms.Vec3D;
@@ -21,14 +23,12 @@ public class Canvas3D {
     private final Presentable<Graphics> presenter;
     private final Liner<Integer> liner;
     private final Wireframe wireframe;
-    
     private List<Solid> scene;
-
-    double speed = 0.07;
+    private final double CAM_SPEED = 0.05;
     private int c = 0;
     private int r = 0;
     private int objMode = 1;
-
+    char rotateMode = 'Z';
     private Camera cam;
 
     public Canvas3D(int width, int height) {
@@ -44,19 +44,20 @@ public class Canvas3D {
         scene = new ArrayList<>();
 
         // 3D objects
-        Cube cube3D = new Cube();
-        Cuboid cuboid3D = new Cuboid();
-        Pyramid pyramid3D = new Pyramid();
-        Tetrahedron tetrahedron3D = new Tetrahedron();
+        Cube cube = new Cube();
+        Cuboid cuboid = new Cuboid();
+        Pyramid pyramid = new Pyramid();
+        Pyramid3 pyramid3 = new Pyramid3();
+
+        // Axis
+        Axis axis3D = new Axis();
 
         // Camera
         cam = new Camera(new Vec3D(-1, -4, 1), 1, -0.5, 1.5, false);
-        Mat4PerspRH proj = new Mat4PerspRH(1, (float) this.img.getHeight() / (float) this.img.getWidth(), 0.01, 100.0);
-        this.wireframe = new Wireframe(img, 0x66faff, liner, cam.getViewMatrix(), proj);
+        Mat4PerspRH perspRH = new Mat4PerspRH(1, (float) this.img.getHeight() / (float) this.img.getWidth(), 0.01, 100.0);
+        this.wireframe = new Wireframe(img, 0x66faff, liner, cam.getViewMatrix(), perspRH);
 
 
-
-        
         panel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
@@ -88,15 +89,16 @@ public class Canvas3D {
                         int c2 = e.getX();
                         int r2 = e.getY();
                         System.out.println("C2 = " + c2 + " R2 = " + r2);
+                        System.out.println(cam.getAzimuth());
                         if (c2 > c) {
-                            cam = cam.addAzimuth(speed);
+                            cam = cam.addAzimuth(CAM_SPEED);
                         } else if (c2 < c) {
-                            cam = cam.addAzimuth(-speed);
+                            cam = cam.addAzimuth(-CAM_SPEED);
                         }
                         if (r2 > r) {
-                            cam = cam.addZenith(speed);
+                            cam = cam.addZenith(CAM_SPEED);
                         } else if (r2 < r) {
-                            cam = cam.addZenith(-speed);
+                            cam = cam.addZenith(-CAM_SPEED);
                         }
                         c = c2;
                         r = r2;
@@ -125,36 +127,61 @@ public class Canvas3D {
                 }
                 if (e.getKeyCode() == KeyEvent.VK_1) {
                     scene.clear();
-                    scene.add(cube3D);
+                    scene.add(cube);
+                    ;
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_2) {
                     scene.clear();
-                    scene.add(cuboid3D);
+                    scene.add(cuboid);
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_3) {
                     scene.clear();
-                    scene.add(pyramid3D);
+                    scene.add(pyramid);
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_4) {
                     scene.clear();
-                    scene.add(tetrahedron3D);
+                    scene.add(pyramid3);
 
                 }
+
+
+                 // rotate modes
+                if(e.getKeyCode() == KeyEvent.VK_Z) {
+                    rotateMode = 'Z';
+                }
+                if(e.getKeyCode() == KeyEvent.VK_X) {
+                    rotateMode = 'X';
+                }
+                if(e.getKeyCode() == KeyEvent.VK_Y) {
+                    rotateMode = 'Y';
+                }
+                //rotate listener
+                // arrow up - positive, arrow down - negative
+                if(e.getKeyCode() == KeyEvent.VK_UP){
+                    // rotate
+                    scene.get(0).rotate(0.1, rotateMode);
+                }
+
+                if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                    // rotate
+                    scene.get(0).rotate(-0.1, rotateMode);
+                }
+
                 // Cam movement WASD
                 if (e.getKeyCode() == KeyEvent.VK_W) {
-                    cam = cam.forward(speed);
+                    cam = cam.forward(CAM_SPEED);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_S) {
-                    cam = cam.backward(speed);
+                    cam = cam.backward(CAM_SPEED);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_A) {
-                    cam = cam.left(speed);
+                    cam = cam.left(CAM_SPEED);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_D) {
-                    cam = cam.right(speed);
+                    cam = cam.right(CAM_SPEED);
                 }
 
                 present();
@@ -169,9 +196,9 @@ public class Canvas3D {
             public void mouseWheelMoved(MouseWheelEvent e) {
                 clear();
                 if (e.getWheelRotation() < 0) {
-                    cam = cam.forward(speed);
+                    cam = cam.forward(CAM_SPEED);
                 } else {
-                    cam = cam.backward(speed);
+                    cam = cam.backward(CAM_SPEED);
                 }
                 present();
             }
@@ -179,16 +206,15 @@ public class Canvas3D {
 
 
         JLabel label = new JLabel();
-        label.setText("Cam [W] [A] [S] [D] | Solid [1] [2] [3] [4] | Zoom [M-Wheel]");
-
-        label.setVerticalAlignment(JLabel.CENTER);
-        label.setHorizontalAlignment(JLabel.CENTER);
-
-        label.setFont(new Font("Arial", Font.BOLD, 15));
-
+        label.setText("Cam [WASD] | Solid [1][2][3][4] | Zoom [M-Wheel] |  Rotate [↑][↓] modes (X, Y, Z)");
+        // 0 = CENTER
+        label.setVerticalAlignment(0);
+        label.setHorizontalAlignment(0);
+        Font f = new Font("Arial", 0, 15);
+        label.setFont(f);
         label.setPreferredSize(new Dimension(width, 50));
-        frame.add(label, BorderLayout.NORTH);
-        frame.add(panel, BorderLayout.CENTER);
+        frame.add(label, "North");
+        frame.add(panel, "Center");
         frame.pack();
         frame.setVisible(true);
         panel.grabFocus();
@@ -206,7 +232,8 @@ public class Canvas3D {
     public void present() {
         wireframe.setView(cam.getViewMatrix());
         wireframe.renderScene(scene);
-         
+
+
         final Graphics g = panel.getGraphics();
         if (g != null) {
             presenter.present(g);

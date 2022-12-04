@@ -1,4 +1,4 @@
-package objectdata;
+package cz.uhk.pgrf1.task3.objectdata;
 
 import transforms.Point3D;
 
