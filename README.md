@@ -11,4 +11,8 @@
 
   3 - Pyramid
  
-  C - Clear
+  4 - Pyramid (triangle)
+
+  UP, DOWN - rotate
+
+  X, Y, Z - axis selection
