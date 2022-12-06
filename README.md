@@ -3,6 +3,8 @@
 
   Controls:
 
+  C - reset 
+
   W, A, S, D - move camera
   
   1 - Cube
@@ -15,4 +17,4 @@
 
   UP, DOWN - rotate
 
-  X, Y, Z - axis selection
+  X, Y, Z - axis selection (for rotation)

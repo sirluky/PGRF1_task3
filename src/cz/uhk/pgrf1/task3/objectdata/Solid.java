@@ -28,9 +28,10 @@ public class Solid {
     public void addIndices(Integer... indices) {
         iBuffer.addAll(Arrays.asList(indices));
     }
+     
 
     public void rotate(double angle, char type) {
-        // Rotate around Z axis
+        // Rotate around axis
         switch (type) {
             case 'Z':
                 model = model.mul(new Mat4RotZ(angle));
@@ -44,7 +45,6 @@ public class Solid {
         }
         model = model.mul(new Mat4RotZ(angle));
     }
-
 
 
 

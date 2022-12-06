@@ -6,7 +6,7 @@ public class Cuboid extends Solid
 {
     public Cuboid()
     {
-        // Same as cube but height is 2 times bigger
+        // Cuboid
         vBuffer.add(new Point3D( 0,  0,  0));
         vBuffer.add(new Point3D( 1,  0,  0));
         vBuffer.add(new Point3D( 1,  2,  0));

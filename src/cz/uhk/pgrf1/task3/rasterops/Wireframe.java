@@ -84,4 +84,11 @@ public class Wireframe<P> {
     }
 
 
+    public void clearIndices() {
+        solid.getiBuffer().clear();
+    }
+
+    public void setColor(int color) {
+        this.pixelValue = (P) Integer.valueOf(color);
+    }
 }
