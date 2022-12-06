@@ -2,14 +2,15 @@ package cz.uhk.pgrf1.task3.objectdata;
 
 import transforms.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import javax.swing.text.html.Option;
+import java.util.*;
 
 public class Solid {
 
     public List<Point3D> vBuffer = new ArrayList<>();
     public List<Integer> iBuffer = new ArrayList<>();
+
+    public HashMap<Integer, Integer> pixelBuffer = new HashMap<>();
 
     private Mat4 model = new Mat4Identity();
 
@@ -23,6 +24,18 @@ public class Solid {
 
     public List<Integer> getiBuffer() {
         return iBuffer;
+    }
+
+    public Optional<Integer> getPixel(Integer key) {
+        if(pixelBuffer.containsKey(key)) {
+            return Optional.of(pixelBuffer.get(key));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public void addPixel(Integer key, Integer pixel) {
+        pixelBuffer.put(key, pixel);
     }
 
     public void addIndices(Integer... indices) {

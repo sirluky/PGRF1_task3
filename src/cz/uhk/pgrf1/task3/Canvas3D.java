@@ -6,7 +6,7 @@ import cz.uhk.pgrf1.task3.rasterdata.RasterImage;
 import cz.uhk.pgrf1.task3.rasterdata.RasterImageBI;
 import cz.uhk.pgrf1.task3.rasterops.Liner;
 import cz.uhk.pgrf1.task3.rasterops.TrivialLiner;
-import cz.uhk.pgrf1.task3.rasterops.Wireframe;
+import cz.uhk.pgrf1.task3.rasterops.RenderLine;
 import transforms.Camera;
 import transforms.Mat4PerspRH;
 import transforms.Vec3D;
@@ -22,8 +22,8 @@ public class Canvas3D {
     private final RasterImage<Integer> img;
     private final Presentable<Graphics> presenter;
     private final Liner<Integer> liner;
-    private final Wireframe wireframe;
-    private final Wireframe wireframe2;
+    private final RenderLine wireframe;
+    private final RenderLine wireframe2;
     private List<Solid> scene;
     private List<Solid> axisScene;
     // Camera
@@ -41,7 +41,7 @@ public class Canvas3D {
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
         frame.setResizable(false);
-        frame.setTitle("PGRF1 - Task 3 - 3D");
+//        frame.setTitle("PGRF1 - Task 3 - 3D");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         final RasterImageBI auxRasterImage = new RasterImageBI(width, height);
@@ -63,8 +63,8 @@ public class Canvas3D {
         cam = new Camera(vec3D, 1, -0.5, 1.5, false);
 
         Mat4PerspRH perspRH = new Mat4PerspRH(1, (float) this.img.getHeight() / (float) this.img.getWidth(), 0.01, 100.0);
-        this.wireframe = new Wireframe(img, 0x66faff, liner, cam.getViewMatrix(), perspRH);
-        this.wireframe2 = new Wireframe(img, 0xff0000, liner, cam.getViewMatrix(), perspRH);
+        this.wireframe = new RenderLine(img, 0xffffff, liner, cam.getViewMatrix(), perspRH);
+        this.wireframe2 = new RenderLine(img, 0xff0000, liner, cam.getViewMatrix(), perspRH);
 
         panel = new JPanel() {
             private static final long serialVersionUID = 1L;

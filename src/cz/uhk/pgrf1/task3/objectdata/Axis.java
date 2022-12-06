@@ -11,5 +11,9 @@ public class Axis extends Solid {
         vBuffer.add(new Point3D(0, 0, 5));
 
         addIndices(0, 1, 0, 2, 0, 3);
+        addPixel(0,0x0000ff);
+        addPixel(2,0xff0000);
+        addPixel(4,0x00ff00);
+
     }
 }

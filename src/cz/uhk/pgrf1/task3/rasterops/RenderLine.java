@@ -6,7 +6,7 @@ import transforms.*;
 
 import java.util.List;
 
-public class Wireframe<P> {
+public class RenderLine<P> {
 
 
 
@@ -19,8 +19,8 @@ public class Wireframe<P> {
     private RasterImage<P> img;
     private Mat4 view;
 
-    public Wireframe(final RasterImage<P> img, final P pixelValue,
-                     Liner<P> liner, Mat4 view, Mat4PerspRH proj) {
+    public RenderLine(final RasterImage<P> img, final P pixelValue,
+                      Liner<P> liner, Mat4 view, Mat4PerspRH proj) {
         this.liner = liner;
         this.proj = proj;
         this.view = view;
@@ -28,7 +28,7 @@ public class Wireframe<P> {
         this.pixelValue = pixelValue;
     }
 
-    public Wireframe(RasterImage<P> img, final P pixelValue, Liner<P> liner, Mat4 view, Mat4OrthoRH orthoRH) {
+    public RenderLine(RasterImage<P> img, final P pixelValue, Liner<P> liner, Mat4 view, Mat4OrthoRH orthoRH) {
         this.img =  img;
         this.pixelValue = pixelValue;
         this.liner = liner;
@@ -77,8 +77,13 @@ public class Wireframe<P> {
             Vec3D v1 = transform(new Vec3D(a));
             Vec3D v2 = transform(new Vec3D(b));
 
+            P pixel = pixelValue;
+            if(!solid.getPixel(i).isEmpty()) {
+                pixel = (P) solid.getPixel(i).get();
+            }
+
             liner.drawLine(img, (int) Math.round(v1.getX()), (int) Math.round(v1.getY()),
-                    (int) Math.round(v2.getX()), (int) Math.round(v2.getY()), pixelValue);
+                    (int) Math.round(v2.getX()), (int) Math.round(v2.getY()), pixel);
 
         }
     }
